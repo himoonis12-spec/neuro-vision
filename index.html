@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dice Rogue</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <main id="app">
+      <section id="startScreen" class="screen">
+        <h1>DICE ROGUE</h1>
+        <p class="subtitle">Выберите стартовую стратегию</p>
+        <div id="strategyList" class="strategy-grid"></div>
+      </section>
+
+      <section id="gameScreen" class="screen hidden">
+        <header class="glass-panel header">
+          <div>🪙 <span id="money">0</span></div>
+          <div>❤️ <span id="hearts">3</span></div>
+          <div class="progress-wrap">
+            <div id="scoreBar" class="progress-bar"></div>
+            <span id="targetLabel">Цель: 200</span>
+          </div>
+          <div>Раунд <span id="round">1</span></div>
+          <div id="strategyName">Стратегия: -</div>
+        </header>
+
+        <section id="diceField" class="dice-field"></section>
+
+        <section id="resultOverlay" class="overlay hidden" aria-live="polite">
+          <div id="resultContent" class="glass-panel result-card"></div>
+        </section>
+
+        <footer class="glass-panel controls">
+          <button id="rerollBtn" class="btn">🔄 ПЕРЕБРОС (<span id="rerollsLeft">0</span>)</button>
+          <button id="bankBtn" class="btn btn-primary">СХОДИТЬ!</button>
+        </footer>
+
+        <section>
+          <h2>Коллекция</h2>
+          <div id="collectionStrip" class="collection-strip"></div>
+        </section>
+      </section>
+
+      <div id="shopModal" class="modal hidden">
+        <div class="glass-panel modal-content">
+          <h2>Магазин</h2>
+          <p>Баланс: <span id="shopMoney">0</span> 🪙</p>
+          <div class="shop-columns">
+            <div>
+              <h3>Шаман</h3>
+              <div id="shopShaman"></div>
+            </div>
+            <div>
+              <h3>Ювелир</h3>
+              <div id="shopJeweler"></div>
+            </div>
+          </div>
+          <button id="nextRoundBtn" class="btn btn-primary">Следующий раунд</button>
+        </div>
+      </div>
+
+      <div id="gameOverModal" class="modal hidden">
+        <div class="glass-panel modal-content">
+          <h2 id="gameOverTitle">Забег завершён</h2>
+          <p id="gameOverText"></p>
+          <button id="restartBtn" class="btn btn-primary">Новая игра</button>
+        </div>
+      </div>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

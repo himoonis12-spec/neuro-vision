@@ -1,0 +1,138 @@
+:root {
+  --bg-dark: #0f172a;
+  --bg-panel: #1e293b;
+  --bg-overlay: rgba(0, 0, 0, 0.85);
+  --metal: #b87333;
+  --enamel: #008b8b;
+  --glow: #20b2aa;
+  --common: #c9d1d9;
+  --silver: #38bdf8;
+  --gold: #fbbf24;
+  --success: #22c55e;
+  --danger: #ef4444;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: radial-gradient(circle at top, #1b2550, var(--bg-dark));
+  color: #fff;
+  font-family: 'Press Start 2P', system-ui;
+  font-size: 10px;
+}
+#app { min-height: 100vh; padding: 12px; }
+.hidden { display: none !important; }
+.screen { display: grid; gap: 12px; }
+.subtitle { color: var(--glow); }
+
+.glass-panel {
+  background: rgba(30, 41, 59, 0.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  padding: 10px;
+}
+.header {
+  display: grid;
+  grid-template-columns: repeat(5, auto);
+  align-items: center;
+  gap: 8px;
+}
+.progress-wrap { position: relative; width: min(360px, 35vw); height: 24px; border: 1px solid var(--glow); }
+.progress-bar {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0;
+  background: linear-gradient(90deg, var(--enamel), var(--glow));
+  transition: width 0.5s ease;
+}
+#targetLabel { position: relative; z-index: 1; display: grid; place-items: center; height: 100%; }
+
+.strategy-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+.card { border: 1px solid var(--metal); }
+
+.dice-field {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(60px, 1fr));
+  gap: 12px;
+  min-height: 170px;
+  align-items: center;
+}
+.scene {
+  perspective: 600px;
+  width: 60px;
+  height: 60px;
+  margin: 0 auto;
+}
+.cube {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  cursor: pointer;
+}
+.cube.shake { animation: shake 0.3s linear infinite; }
+.cube.selected { filter: drop-shadow(0 0 15px var(--danger)); }
+.cube.selected::after { content: '↻'; position: absolute; left: 50%; top: -20px; transform: translateX(-50%); animation: bounce 1s infinite; }
+.face {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--metal);
+  background: var(--enamel);
+  color: white;
+}
+.face:nth-child(1) { transform: translateZ(30px); }
+.face:nth-child(2) { transform: rotateY(180deg) translateZ(30px); }
+.face:nth-child(3) { transform: rotateY(90deg) translateZ(30px); }
+.face:nth-child(4) { transform: rotateY(-90deg) translateZ(30px); }
+.face:nth-child(5) { transform: rotateX(90deg) translateZ(30px); }
+.face:nth-child(6) { transform: rotateX(-90deg) translateZ(30px); }
+
+.common .face { color: var(--common); }
+.silver .face { color: var(--silver); box-shadow: 0 0 10px var(--silver); }
+.gold .face { color: var(--gold); box-shadow: 0 0 12px var(--gold); }
+.chaos .face { color: #c084fc; box-shadow: 0 0 15px #6366f1; }
+
+.controls { display: flex; gap: 8px; justify-content: center; }
+.btn {
+  font: inherit;
+  color: #fff;
+  background: #334155;
+  border: 1px solid #64748b;
+  border-bottom: 4px solid #475569;
+  padding: 10px;
+  cursor: pointer;
+}
+.btn:active { transform: translateY(2px); border-bottom-width: 2px; }
+.btn[disabled] { opacity: 0.4; cursor: not-allowed; }
+.btn-primary { background: #0ea5e9; }
+
+.collection-strip { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+.collection-item { border: 1px solid #475569; padding: 8px; text-align: center; }
+
+.overlay, .modal {
+  position: fixed;
+  inset: 0;
+  background: var(--bg-overlay);
+  display: grid;
+  place-items: center;
+}
+.result-card { min-width: min(520px, 90vw); }
+.modal-content { width: min(1000px, 95vw); }
+.shop-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.shop-item { display: flex; justify-content: space-between; align-items: center; margin: 6px 0; border: 1px solid #475569; padding: 8px; }
+
+.floating-text { position: fixed; top: 10%; left: 50%; transform: translateX(-50%); animation: floatUp 1s forwards; pointer-events: none; }
+
+@keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(-5px)} }
+@keyframes shake { 0%{transform:translate(0)} 25%{transform:translate(1px,-1px)} 50%{transform:translate(-1px,1px)} 75%{transform:translate(1px,1px)} 100%{transform:translate(0)} }
+@keyframes floatUp { 0%{transform:translateX(-50%) translateY(0);opacity:1} 100%{transform:translateX(-50%) translateY(-50px);opacity:0} }
+
+@media (max-width: 920px) {
+  .header { grid-template-columns: 1fr 1fr; }
+  .shop-columns { grid-template-columns: 1fr; }
+  .dice-field { grid-template-columns: repeat(3, 1fr); }
+}
